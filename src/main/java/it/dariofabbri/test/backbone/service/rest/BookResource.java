@@ -15,11 +15,16 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 @Path("/books")
 @Produces("application/json")
 public class BookResource {
 
-	private static List<Book> books = new ArrayList<Book>();;
+	private static final Logger logger = LoggerFactory.getLogger(BookResource.class);
+	
+	private static List<Book> books = new ArrayList<Book>();
 	
 	public BookResource() {
 
@@ -43,14 +48,14 @@ public class BookResource {
 	@GET
 	public List<Book> getBooks() {
 
-		System.out.println("getBooks called!");
+		logger.debug("getBooks called!");
 		return books;
 	}
 	
 	@DELETE
 	@Path("/{id}")
 	public Response deleteBook(@PathParam("id") Integer id) {
-		System.out.println("deleteBook called!");
+		logger.debug("deleteBook called!");
 		
 		Book bookToBeDeleted = null;
 		for(Book book : books) {
@@ -58,6 +63,7 @@ public class BookResource {
 				bookToBeDeleted = book;
 			}
 		}
+		
 		if(bookToBeDeleted != null) {
 			books.remove(bookToBeDeleted);
 			return Response.ok().build();
@@ -71,7 +77,7 @@ public class BookResource {
 	@Consumes("application/json")
 	public Response createBook(Book book) {
 		
-		System.out.println("createBook called!");
+		logger.debug("createBook called!");
 		
 		books.add(book);
 		return Response.ok().build();
