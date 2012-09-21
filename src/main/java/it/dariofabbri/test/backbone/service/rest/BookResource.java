@@ -24,9 +24,10 @@ public class BookResource {
 
 	private static final Logger logger = LoggerFactory.getLogger(BookResource.class);
 	
-	private static List<Book> books = new ArrayList<Book>();
+	private static List<Book> books;
 	
-	public BookResource() {
+	static {
+		books = new ArrayList<Book>();
 
 		Book book = new Book();
 		book.setId(1);
@@ -43,6 +44,9 @@ public class BookResource {
 		book.setReleaseDate("11/9/2012");
 		book.setKeywords("Tech");
 		books.add(book);
+	}
+	
+	public BookResource() {
 	}
 	
 	@GET
